@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tulin Alghamdi — Software Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cream: #fdf6f0;
+    --blush: #f5d6e0;
+    --rose: #e8a0b8;
+    --deep-rose: #c4607e;
+    --mauve: #8b4a5c;
+    --text: #2a1a22;
+    --text-light: #7a5a66;
+    --white: #ffffff;
+    --card: rgba(255,255,255,0.72);
+    --glass: rgba(255,245,249,0.55);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ─── Custom Cursor ─── */
+  #cursor {
+    position: fixed; top: 0; left: 0;
+    width: 12px; height: 12px;
+    background: var(--deep-rose);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    mix-blend-mode: multiply;
+  }
+  #cursor-ring {
+    position: fixed; top: 0; left: 0;
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--rose);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s ease, width 0.3s, height 0.3s;
+  }
+  body:hover #cursor { transform: translate(-50%,-50%); }
+
+  /* ─── Canvas BG ─── */
+  #bg-canvas {
+    position: fixed; inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 4rem;
+    backdrop-filter: blur(18px);
+    background: rgba(253,246,240,0.7);
+    border-bottom: 1px solid rgba(232,160,184,0.2);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--mauve);
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-light);
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; left: 0; bottom: -3px;
+    width: 0; height: 1.5px;
+    background: var(--deep-rose);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--deep-rose); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ─── SECTIONS ─── */
+  section { position: relative; z-index: 1; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 6rem 4rem 4rem;
+    text-align: center;
+    flex-direction: column;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--deep-rose);
+    background: rgba(232,160,184,0.18);
+    border: 1px solid rgba(232,160,184,0.4);
+    padding: 0.4rem 1.2rem; border-radius: 50px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300; line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+  .hero-name span { color: var(--deep-rose); font-weight: 700; font-style: italic; }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--text-light); font-weight: 300;
+    margin-top: 1.2rem; margin-bottom: 2.5rem;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 1s 0.35s ease both;
+  }
+  .btn {
+    padding: 0.85rem 2.2rem;
+    border-radius: 50px; font-size: 0.82rem;
+    font-weight: 500; letter-spacing: 0.08em;
+    text-decoration: none; cursor: none;
+    transition: transform 0.25s, box-shadow 0.25s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--deep-rose), var(--mauve));
+    color: var(--white);
+    box-shadow: 0 8px 28px rgba(196,96,126,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(196,96,126,0.45); }
+  .btn-outline {
+    border: 1.5px solid var(--rose);
+    color: var(--deep-rose);
+    background: transparent;
+  }
+  .btn-outline:hover { background: var(--blush); transform: translateY(-3px); }
+  .hero-scroll {
+    margin-top: 5rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+  .hero-scroll span { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-light); }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--rose), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* ─── 3D CARD ORBIT ─── */
+  .orbit-scene {
+    width: 320px; height: 320px;
+    perspective: 800px;
+    margin: 3rem auto 1rem;
+    animation: fadeUp 1s 0.4s ease both;
+  }
+  .orbit-card {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: orbit3d 14s linear infinite;
+  }
+  .orbit-face {
+    position: absolute; inset: 0;
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0.6rem;
+    backface-visibility: hidden;
+  }
+  .orbit-front {
+    background: linear-gradient(135deg, rgba(245,214,224,0.9), rgba(255,255,255,0.95));
+    border: 1.5px solid rgba(232,160,184,0.5);
+    box-shadow: 0 24px 60px rgba(196,96,126,0.18);
+    backdrop-filter: blur(10px);
+  }
+  .orbit-back {
+    background: linear-gradient(135deg, rgba(196,96,126,0.92), rgba(139,74,92,0.95));
+    transform: rotateY(180deg);
+  }
+  .orbit-face .avatar-circle {
+    width: 90px; height: 90px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--rose), var(--deep-rose));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 700; color: white;
+    box-shadow: 0 8px 24px rgba(196,96,126,0.4);
+  }
+  .orbit-face h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; color: var(--text);
+  }
+  .orbit-face p { font-size: 0.75rem; color: var(--text-light); }
+  .orbit-back h3 { color: white; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; }
+  .orbit-back p { color: rgba(255,255,255,0.75); font-size: 0.73rem; text-align: center; padding: 0 1.5rem; }
+  .gpa-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 50px; padding: 0.3rem 1rem;
+    color: white; font-size: 0.8rem; font-weight: 500;
+    margin-top: 0.4rem;
+  }
+
+  /* ─── SECTION BASE ─── */
+  .section-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 7rem 2rem;
+  }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--deep-rose); margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-label::before {
+    content: ''; width: 28px; height: 1.5px;
+    background: var(--deep-rose);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 600; line-height: 1.1;
+    color: var(--text); margin-bottom: 3.5rem;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--white); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: center;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-3d-box {
+    width: 100%; aspect-ratio: 1;
+    max-width: 340px;
+    perspective: 700px;
+  }
+  .box-inner {
+    width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    animation: floatRotate 8s ease-in-out infinite;
+    position: relative;
+  }
+  .box-face {
+    position: absolute;
+    width: 100%; height: 100%;
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+  }
+  .box-front {
+    background: linear-gradient(135deg, #fce8f0, #f5d6e0);
+    border: 1.5px solid rgba(232,160,184,0.6);
+    box-shadow: 0 20px 50px rgba(196,96,126,0.15);
+    transform: translateZ(20px);
+    flex-direction: column; gap: 1rem;
+  }
+  .stats-row {
+    display: flex; gap: 1.5rem; justify-content: center;
+    flex-wrap: wrap;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 700; color: var(--deep-rose);
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.7rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.1em; }
+  .about-text p {
+    font-size: 1.05rem; line-height: 1.85; color: var(--text-light);
+    margin-bottom: 1.5rem;
+  }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+  .info-pills { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 2rem; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--blush); color: var(--mauve);
+    padding: 0.45rem 1rem; border-radius: 50px;
+    font-size: 0.78rem; font-weight: 500;
+  }
+
+  /* ─── EDUCATION ─── */
+  #education { background: var(--cream); }
+  .edu-card {
+    background: var(--card);
+    border: 1.5px solid rgba(232,160,184,0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 12px 40px rgba(196,96,126,0.08);
+    backdrop-filter: blur(10px);
+    display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: start;
+    transition: transform 0.35s, box-shadow 0.35s;
+    transform-style: preserve-3d;
+  }
+  .edu-card:hover { transform: translateY(-6px) rotateX(2deg); box-shadow: 0 24px 60px rgba(196,96,126,0.15); }
+  .edu-icon {
+    width: 70px; height: 70px; border-radius: 16px;
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+  }
+  .edu-degree {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.55rem; font-weight: 600; color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+  .edu-school { font-size: 0.9rem; color: var(--deep-rose); font-weight: 500; margin-bottom: 0.5rem; }
+  .edu-meta { font-size: 0.8rem; color: var(--text-light); margin-bottom: 1rem; }
+  .cert-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .cert-list li {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.85rem; color: var(--text-light);
+  }
+  .cert-list li::before { content: '✦'; color: var(--rose); font-size: 0.7rem; }
+  .gpa-chip {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--deep-rose), var(--mauve));
+    color: white; padding: 0.4rem 1.1rem; border-radius: 50px;
+    font-size: 0.82rem; font-weight: 600; margin-top: 0.8rem;
+    box-shadow: 0 4px 16px rgba(196,96,126,0.3);
+  }
+
+  /* ─── SKILLS ─── */
+  #skills-wrap { background: var(--white); padding: 7rem 2rem; }
+  .skills-container { max-width: 1100px; margin: 0 auto; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .skill-card {
+    background: var(--cream);
+    border: 1.5px solid rgba(232,160,184,0.25);
+    border-radius: 18px;
+    padding: 1.8rem 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    transform-style: preserve-3d;
+    cursor: none;
+  }
+  .skill-card:hover { transform: translateY(-8px) rotateY(4deg); box-shadow: 0 20px 50px rgba(196,96,126,0.12); }
+  .skill-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .skill-cat {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--deep-rose); font-weight: 600; margin-bottom: 0.8rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .skill-tag {
+    background: var(--blush); color: var(--mauve);
+    padding: 0.3rem 0.75rem; border-radius: 50px;
+    font-size: 0.74rem;
+  }
+
+  /* ─── PROJECTS ─── */
+  #projects { background: var(--cream); }
+  .proj-card {
+    background: var(--white);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(196,96,126,0.08);
+    border: 1.5px solid rgba(232,160,184,0.2);
+    display: grid; grid-template-columns: 1fr 1fr; 
+    transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s;
+    transform-style: preserve-3d;
+  }
+  .proj-card:hover { transform: translateY(-10px) rotateX(3deg); box-shadow: 0 32px 70px rgba(196,96,126,0.18); }
+  .proj-visual {
+    background: linear-gradient(135deg, var(--blush) 0%, var(--rose) 50%, var(--deep-rose) 100%);
+    min-height: 320px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .proj-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.25) 0%, transparent 60%);
+  }
+  .proj-emoji { font-size: 5rem; position: relative; z-index: 1; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.2)); }
+  .proj-info { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+  .proj-role {
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em;
+    color: var(--deep-rose); margin-bottom: 0.6rem;
+  }
+  .proj-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 700; color: var(--text);
+    margin-bottom: 1rem; line-height: 1.1;
+  }
+  .proj-desc { font-size: 0.9rem; line-height: 1.75; color: var(--text-light); margin-bottom: 1.5rem; }
+  .proj-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .tech-tag {
+    background: var(--blush); color: var(--mauve);
+    padding: 0.35rem 0.85rem; border-radius: 50px;
+    font-size: 0.74rem; font-weight: 500;
+  }
+  .proj-highlights { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .proj-highlights li {
+    font-size: 0.82rem; color: var(--text-light);
+    display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.5;
+  }
+  .proj-highlights li span { color: var(--rose); flex-shrink: 0; }
+
+  /* ─── EXPERIENCE (certs as experience) ─── */
+  #experience { background: var(--white); }
+  .exp-timeline { position: relative; padding-left: 2rem; }
+  .exp-timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--rose), var(--blush), transparent);
+  }
+  .exp-item {
+    position: relative; margin-bottom: 3rem;
+    padding-left: 2rem;
+    transition: transform 0.3s;
+  }
+  .exp-item:hover { transform: translateX(6px); }
+  .exp-dot {
+    position: absolute; left: -2.35rem; top: 0.4rem;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--deep-rose);
+    box-shadow: 0 0 0 4px rgba(196,96,126,0.2);
+  }
+  .exp-date {
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--rose); margin-bottom: 0.4rem;
+  }
+  .exp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem; font-weight: 600; color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+  .exp-org { font-size: 0.85rem; color: var(--deep-rose); margin-bottom: 0.6rem; }
+  .exp-desc { font-size: 0.88rem; color: var(--text-light); line-height: 1.7; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: linear-gradient(135deg, var(--mauve) 0%, var(--deep-rose) 50%, var(--rose) 100%); }
+  #contact .section-label { color: rgba(255,255,255,0.7); }
+  #contact .section-label::before { background: rgba(255,255,255,0.5); }
+  #contact .section-title { color: white; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .contact-intro { font-size: 1.05rem; color: rgba(255,255,255,0.75); line-height: 1.8; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    color: white; text-decoration: none;
+    font-size: 0.92rem;
+    padding: 1rem 1.4rem;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 14px;
+    transition: background 0.3s, transform 0.3s;
+    backdrop-filter: blur(6px);
+  }
+  .contact-link:hover { background: rgba(255,255,255,0.22); transform: translateX(5px); }
+  .contact-link-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .contact-card {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 24px;
+    padding: 2.5rem;
+    backdrop-filter: blur(12px);
+    transform-style: preserve-3d;
+    transition: transform 0.4s;
+  }
+  .contact-card:hover { transform: rotateY(-4deg) rotateX(2deg); }
+  .contact-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; color: white; margin-bottom: 1.5rem;
+  }
+  .lang-item { margin-bottom: 1rem; }
+  .lang-label { font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.4rem; display: flex; justify-content: space-between; }
+  .lang-bar { height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; }
+  .lang-fill { height: 100%; border-radius: 2px; background: white; }
+  .soft-skills { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+  .soft-tag {
+    background: rgba(255,255,255,0.18); color: white;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 0.35rem 0.9rem; border-radius: 50px; font-size: 0.76rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center; padding: 2rem;
+    background: var(--text); color: rgba(255,255,255,0.4);
+    font-size: 0.78rem; letter-spacing: 0.06em;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes orbit3d {
+    0% { transform: rotateY(0deg) rotateX(8deg); }
+    50% { transform: rotateY(180deg) rotateX(-4deg); }
+    100% { transform: rotateY(360deg) rotateX(8deg); }
+  }
+  @keyframes floatRotate {
+    0%,100% { transform: translateY(0) rotateX(8deg) rotateY(0deg); }
+    33% { transform: translateY(-12px) rotateX(12deg) rotateY(8deg); }
+    66% { transform: translateY(-6px) rotateX(4deg) rotateY(-6deg); }
+  }
+  @keyframes scrollPulse {
+    0%,100% { opacity: 1; transform: scaleY(1); }
+    50% { opacity: 0.3; transform: scaleY(0.6); }
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+  /* ─── REVEAL ─── */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    .about-grid, .proj-card, .contact-grid { grid-template-columns: 1fr; }
+    .proj-visual { min-height: 220px; }
+    .section-inner { padding: 5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">T · A</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#ratings">Ratings</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">✦ Software Engineering Graduate</div>
+  <h1 class="hero-name">Tulin <span>Alghamdi</span></h1>
+  <p class="hero-sub">Building intelligent apps & beautiful experiences — from Swift to AI</p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View My Work ↓</a>
+    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+  </div>
+
+  <!-- 3D Flip Card -->
+  <div class="orbit-scene">
+    <div class="orbit-card">
+      <div class="orbit-face orbit-front">
+        <div class="avatar-circle">TA</div>
+        <h3>Tulin Alghamdi</h3>
+        <p>Software Engineer · iOS Developer · AI Builder</p>
+      </div>
+      <div class="orbit-face orbit-back">
+        <h3>University of Jeddah</h3>
+        <p>Bachelor's in Software Engineering<br/>College of Computer Science & Engineering</p>
+        <div class="gpa-badge">GPA 4.59 · Academic Excellence</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-3d-box">
+          <div class="box-inner">
+            <div class="box-face box-front">
+              <div class="stats-row">
+                <div class="stat-item">
+                  <div class="stat-num">4.59</div>
+                  <div class="stat-label">GPA</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-num">5+</div>
+                  <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-num">2</div>
+                  <div class="stat-label">Certifications</div>
+                </div>
+              </div>
+              <p style="font-size:0.8rem;color:var(--text-light);text-align:center;padding:0 1.5rem">Passionate builder at the intersection of software & AI</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <div class="section-label">About Me</div>
+        <h2 class="section-title">Crafting code,<br/>designing experiences</h2>
+        <p>I'm <strong>Tulin Alghamdi</strong>, a Software Engineering graduate from the University of Jeddah with a passion for building meaningful digital products. I specialize in <strong>iOS development</strong>, <strong>AI integration</strong>, and full-cycle software engineering.</p>
+        <p>From leading Agile teams to architecting AI-powered apps, I thrive in environments where creativity meets technical depth. My graduation project, <strong>Emolody</strong>, integrates real-time facial emotion detection with personalized music and podcast recommendations — a testament to what I love building.</p>
+        <div class="info-pills">
+          <span class="pill">📍 Jeddah, Saudi Arabia</span>
+          <span class="pill">📧 itoleen.72@gmail.com</span>
+          <span class="pill">📱 0564246326</span>
+          <span class="pill">🎓 Seeking Internship</span>
+          <span class="pill">🌐 Arabic & English</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner">
+    <div class="section-label reveal">Education</div>
+    <h2 class="section-title reveal">Academic Journey</h2>
+    <div class="edu-card reveal">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <div class="edu-degree">Bachelor's in Software Engineering</div>
+        <div class="edu-school">University of Jeddah — College of Computer Science & Engineering</div>
+        <div class="edu-meta">2021 – 2026</div>
+        <div class="gpa-chip">GPA: 4.59 / 5.00</div>
+        <br/><br/>
+        <ul class="cert-list">
+          <li>Academic Excellence Certificate — awarded for outstanding academic performance</li>
+          <li>Comprehensive training in software engineering principles, SDLC, and Agile methodologies</li>
+          <li>Graduation project: Emolody — AI Mood-Based Music & Podcast Recommendation App</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills-wrap">
+  <div class="skills-container">
+    <div class="section-label reveal">Technical Skills</div>
+    <h2 class="section-title reveal">What I Work With</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">📱</div>
+        <div class="skill-cat">iOS Development</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Swift</span>
+          <span class="skill-tag">SwiftUI</span>
+          <span class="skill-tag">UIKit</span>
+          <span class="skill-tag">AVFoundation</span>
+          <span class="skill-tag">CoreImage</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🤖</div>
+        <div class="skill-cat">AI & Integration</div>
+        <div class="skill-tags">
+          <span class="skill-tag">OpenAI API</span>
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">OAuth 2.0</span>
+          <span class="skill-tag">Spotify API</span>
+          <span class="skill-tag">Apple MusicKit</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-cat">Development</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">Web Dev</span>
+          <span class="skill-tag">MVC / MVVM</span>
+          <span class="skill-tag">SDLC</span>
+          <span class="skill-tag">Testing</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🛠</div>
+        <div class="skill-cat">Tools & Practices</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Xcode</span>
+          <span class="skill-tag">GitHub</span>
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">Trello</span>
+          <span class="skill-tag">Agile / Scrum</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label reveal">Projects</div>
+    <h2 class="section-title reveal">Featured Work</h2>
+    <div class="proj-card reveal">
+      <div class="proj-visual">
+        <div class="proj-emoji">🎵</div>
+      </div>
+      <div class="proj-info">
+        <div class="proj-role">Graduation Project · Project Lead & iOS Developer</div>
+        <div class="proj-name">Emolody</div>
+        <p class="proj-desc">An AI-powered iOS app that detects your real-time facial emotions through the camera and recommends personalized music and podcasts to match — or uplift — your mood.</p>
+        <div class="proj-tech">
+          <span class="tech-tag">Swift</span>
+          <span class="tech-tag">SwiftUI</span>
+          <span class="tech-tag">OpenAI API</span>
+          <span class="tech-tag">AVFoundation</span>
+          <span class="tech-tag">Spotify OAuth 2.0</span>
+          <span class="tech-tag">Apple MusicKit</span>
+          <span class="tech-tag">Agile</span>
+        </div>
+        <ul class="proj-highlights">
+          <li><span>✦</span> Built AI mood detection using OpenAI API & AVFoundation for real-time emotion analysis</li>
+          <li><span>✦</span> Designed responsive UI with SwiftUI for an intuitive user experience</li>
+          <li><span>✦</span> Conducted unit, integration & system testing for reliability</li>
+          <li><span>✦</span> Integrated Spotify OAuth 2.0 & Apple MusicKit for seamless music connectivity</li>
+          <li><span>✦</span> Led the team using Agile/Scrum and documented full system architecture</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE (Certifications as credentialed experience) -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-label reveal">Experience & Certifications</div>
+    <h2 class="section-title reveal">Credentials & Learning</h2>
+    <div class="exp-timeline">
+      <div class="exp-item reveal">
+        <div class="exp-dot"></div>
+        <div class="exp-date">Certification · SDAIA</div>
+        <div class="exp-title">Artificial Intelligence — Concepts & Advanced Applications</div>
+        <div class="exp-org">Saudi Data and AI Authority (SDAIA)</div>
+        <div class="exp-desc">Earned a Certificate of Achievement covering foundational to advanced AI concepts, including machine learning, neural networks, and real-world AI application development.</div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-dot"></div>
+        <div class="exp-date">Certification · Red Hat</div>
+        <div class="exp-title">Programming in Java EE (AD183)</div>
+        <div class="exp-org">Red Hat</div>
+        <div class="exp-desc">Attended official Red Hat training on Java Enterprise Edition, covering enterprise-grade application development, server-side programming, and modern Java EE frameworks.</div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-dot"></div>
+        <div class="exp-date">Internship · Full-Cycle Software Engineering</div>
+        <div class="exp-title">Software Engineering Intern — UI/UX & Web Development</div>
+        <div class="exp-org">Digitect Agency</div>
+        <div class="exp-desc">
+          Completed a comprehensive internship at Digitect, a professional digital agency, where I was immersed in every phase of the software engineering lifecycle — from the first client conversation to the final product launch.
+          <br/><br/>
+          <strong style="color:var(--text);">Requirements & Client Discovery</strong> — Conducted structured client-facing sessions to gather, analyze, and document requirements. Translated real business needs and user goals into clear, actionable design and development briefs, ensuring every decision was rooted in what the client actually needed.
+          <br/><br/>
+          <strong style="color:var(--text);">UI/UX Design & Prototyping</strong> — Took ownership of the full design process using industry tools like Figma — from wireframes and user flows to high-fidelity interactive prototypes. Improved existing agency websites by auditing usability, redesigning interfaces, and elevating the overall visual experience in line with modern UI/UX standards.
+          <br/><br/>
+          <strong style="color:var(--text);">Web Development & Delivery</strong> — Developed and delivered client websites end-to-end, collaborating closely with the engineering team to bring approved designs to life with clean, maintainable code. Ensured seamless handoff between design and development throughout every project.
+          <br/><br/>
+          This internship gave me real-world exposure to working directly with clients, managing feedback cycles, and delivering polished digital products under professional deadlines — completing the full circle of software engineering in a live agency environment.
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-dot"></div>
+        <div class="exp-date">2021 – 2026 · Academic</div>
+        <div class="exp-title">Project Lead & iOS Developer — Emolody (Graduation Project)</div>
+        <div class="exp-org">University of Jeddah — Capstone Project</div>
+        <div class="exp-desc">Led a full software development lifecycle project from concept to delivery — managing the team, designing architecture, building the iOS app, integrating AI APIs, and producing all technical documentation using Agile/Scrum.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="section-label">Contact</div>
+        <h2 class="section-title" style="color:white">Let's Connect</h2>
+        <p class="contact-intro">I'm currently seeking an internship where I can apply my skills in iOS development and AI integration. If you have an opportunity or just want to say hello, I'd love to hear from you.</p>
+        <div class="contact-links">
+          <a href="mailto:itoleen.72@gmail.com" class="contact-link">
+            <div class="contact-link-icon">📧</div>
+            <div>
+              <div style="font-weight:500">Email</div>
+              <div style="font-size:0.78rem;opacity:0.75">itoleen.72@gmail.com</div>
+            </div>
+          </a>
+          <a href="tel:0564246326" class="contact-link">
+            <div class="contact-link-icon">📱</div>
+            <div>
+              <div style="font-weight:500">Phone</div>
+              <div style="font-size:0.78rem;opacity:0.75">0564246326</div>
+            </div>
+          </a>
+          <div class="contact-link">
+            <div class="contact-link-icon">📍</div>
+            <div>
+              <div style="font-weight:500">Location</div>
+              <div style="font-size:0.78rem;opacity:0.75">Jeddah, Saudi Arabia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-card reveal">
+        <h3>About Me at a Glance</h3>
+        <div class="lang-item">
+          <div class="lang-label"><span>Arabic</span><span>Native</span></div>
+          <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-label"><span>English</span><span>Intermediate</span></div>
+          <div class="lang-bar"><div class="lang-fill" style="width:62%"></div></div>
+        </div>
+        <div style="margin-top:1.8rem">
+          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.6);margin-bottom:0.8rem">Soft Skills</div>
+          <div class="soft-skills">
+            <span class="soft-tag">Leadership</span>
+            <span class="soft-tag">Project Management</span>
+            <span class="soft-tag">Problem-Solving</span>
+            <span class="soft-tag">Communication</span>
+            <span class="soft-tag">Team Collaboration</span>
+            <span class="soft-tag">Adaptability</span>
+            <span class="soft-tag">Self-Learning</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RATINGS SECTION -->
+<section id="ratings" style="background:var(--cream);position:relative;z-index:1;">
+  <div class="section-inner">
+    <div class="section-label reveal">Community</div>
+    <h2 class="section-title reveal">Rate My Profile</h2>
+
+    <!-- Average Score Display -->
+    <div id="avg-display" class="reveal" style="display:flex;align-items:center;gap:2.5rem;margin-bottom:3.5rem;flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div id="avg-number" style="font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:700;color:var(--deep-rose);line-height:1;">—</div>
+        <div id="avg-stars" style="font-size:1.8rem;letter-spacing:4px;color:var(--rose);">☆☆☆☆☆</div>
+        <div id="avg-count" style="font-size:0.78rem;color:var(--text-light);margin-top:0.4rem;text-transform:uppercase;letter-spacing:0.12em;">No ratings yet</div>
+      </div>
+      <div id="bar-chart" style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:0.55rem;">
+        <!-- bars injected by JS -->
+      </div>
+    </div>
+
+    <!-- Rating Form Card -->
+    <div class="reveal" style="background:var(--white);border:1.5px solid rgba(232,160,184,0.3);border-radius:24px;padding:2.5rem;max-width:560px;box-shadow:0 12px 40px rgba(196,96,126,0.08);margin-bottom:3.5rem;transition:transform 0.4s,box-shadow 0.4s;" id="rate-form-card">
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--text);margin-bottom:1.4rem;">Leave Your Rating</h3>
+
+      <!-- Name input -->
+      <div style="margin-bottom:1.2rem;">
+        <label style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-light);display:block;margin-bottom:0.5rem;">Your Name</label>
+        <input id="rater-name" type="text" placeholder="e.g. Sarah Ahmed" maxlength="40"
+          style="width:100%;padding:0.85rem 1.1rem;border:1.5px solid rgba(232,160,184,0.4);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--text);background:var(--cream);outline:none;transition:border 0.3s;"
+          onfocus="this.style.borderColor='var(--deep-rose)'" onblur="this.style.borderColor='rgba(232,160,184,0.4)'"/>
+      </div>
+
+      <!-- Star picker -->
+      <div style="margin-bottom:1.4rem;">
+        <label style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-light);display:block;margin-bottom:0.7rem;">Your Rating</label>
+        <div id="star-picker" style="display:flex;gap:0.4rem;">
+          <span class="star-pick" data-v="1" style="font-size:2.2rem;cursor:none;transition:transform 0.2s,filter 0.2s;filter:grayscale(1);opacity:0.4;">★</span>
+          <span class="star-pick" data-v="2" style="font-size:2.2rem;cursor:none;transition:transform 0.2s,filter 0.2s;filter:grayscale(1);opacity:0.4;">★</span>
+          <span class="star-pick" data-v="3" style="font-size:2.2rem;cursor:none;transition:transform 0.2s,filter 0.2s;filter:grayscale(1);opacity:0.4;">★</span>
+          <span class="star-pick" data-v="4" style="font-size:2.2rem;cursor:none;transition:transform 0.2s,filter 0.2s;filter:grayscale(1);opacity:0.4;">★</span>
+          <span class="star-pick" data-v="5" style="font-size:2.2rem;cursor:none;transition:transform 0.2s,filter 0.2s;filter:grayscale(1);opacity:0.4;">★</span>
+        </div>
+      </div>
+
+      <!-- Optional message -->
+      <div style="margin-bottom:1.6rem;">
+        <label style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-light);display:block;margin-bottom:0.5rem;">Message <span style="opacity:0.5">(optional)</span></label>
+        <textarea id="rater-msg" placeholder="Share a quick thought…" maxlength="160" rows="3"
+          style="width:100%;padding:0.85rem 1.1rem;border:1.5px solid rgba(232,160,184,0.4);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--text);background:var(--cream);outline:none;resize:none;transition:border 0.3s;"
+          onfocus="this.style.borderColor='var(--deep-rose)'" onblur="this.style.borderColor='rgba(232,160,184,0.4)'"></textarea>
+      </div>
+
+      <button id="submit-rating" onclick="submitRating()"
+        style="width:100%;padding:0.95rem;border:none;border-radius:50px;background:linear-gradient(135deg,var(--deep-rose),var(--mauve));color:white;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:600;letter-spacing:0.08em;cursor:none;transition:transform 0.25s,box-shadow 0.25s;box-shadow:0 8px 24px rgba(196,96,126,0.3);">
+        Submit Rating ✦
+      </button>
+      <div id="form-msg" style="margin-top:0.9rem;font-size:0.82rem;text-align:center;min-height:1.2rem;color:var(--deep-rose);"></div>
+    </div>
+
+    <!-- Ratings Feed -->
+    <div class="reveal">
+      <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--deep-rose);margin-bottom:1.4rem;display:flex;align-items:center;gap:0.8rem;">
+        <span style="width:28px;height:1.5px;background:var(--deep-rose);display:inline-block;"></span>
+        What People Say
+      </div>
+      <div id="ratings-feed" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;">
+        <div style="color:var(--text-light);font-size:0.88rem;padding:1rem;">Loading ratings…</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Tulin Alghamdi · Software Engineering Graduate · Jeddah, Saudi Arabia</p>
+</footer>
+
+<script>
+// ─── Custom Cursor ───
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.transform = `translate(${mx-6}px, ${my-6}px)`;
+});
+function animateRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.transform = `translate(${rx-18}px, ${ry-18}px)`;
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+document.querySelectorAll('a, button, .skill-card, .proj-card, .edu-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform += ' scale(1.6)';
+    ring.style.width = '56px'; ring.style.height = '56px';
+  });
+  el.addEventListener('mouseleave', () => {
+    ring.style.width = '36px'; ring.style.height = '36px';
+  });
+});
+
+// ─── Canvas Particle Background ───
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', () => { resize(); init(); });
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.r = Math.random() * 2.5 + 0.5;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.3;
+    this.alpha = Math.random() * 0.35 + 0.05;
+    const colors = ['#e8a0b8','#f5d6e0','#c4607e','#8b4a5c'];
+    this.color = colors[Math.floor(Math.random()*colors.length)];
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = this.alpha;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+// Connections
+function drawConnections() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i+1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if (dist < 110) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = '#e8a0b8';
+        ctx.globalAlpha = (1 - dist/110) * 0.15;
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+    }
+  }
+}
+
+function init() {
+  particles = [];
+  const count = Math.floor(W * H / 16000);
+  for (let i = 0; i < count; i++) particles.push(new Particle());
+}
+init();
+
+function animate() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => { p.update(); p.draw(); });
+  drawConnections();
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ─── Scroll Reveal ───
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(r => obs.observe(r));
+
+// ─── 3D Tilt on cards ───
+document.querySelectorAll('.proj-card, .edu-card, .contact-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `perspective(800px) rotateX(${-y*10}deg) rotateY(${x*10}deg) translateY(-8px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// ─── Parallax on hero ───
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  const heroName = document.querySelector('.hero-name');
+  const herySub = document.querySelector('.hero-sub');
+  if (heroName) heroName.style.transform = `translateY(${y * 0.25}px)`;
+  if (herySub) herySub.style.transform = `translateY(${y * 0.15}px)`;
+});
+
+// ─── RATINGS SYSTEM ───
+const STORAGE_KEY = 'tulin_portfolio_ratings_v1';
+let selectedStar = 0;
+
+// ── Load ratings from localStorage ──
+function loadRatings() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+// ── Save ratings to localStorage ──
+function saveRatings(list) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+
+// ── Star picker interaction ──
+const starPicks = document.querySelectorAll('.star-pick');
+starPicks.forEach(s => {
+  s.addEventListener('mouseenter', () => highlightStars(+s.dataset.v));
+  s.addEventListener('mouseleave', () => highlightStars(selectedStar));
+  s.addEventListener('click', () => {
+    selectedStar = +s.dataset.v;
+    highlightStars(selectedStar);
+  });
+});
+
+function highlightStars(n) {
+  starPicks.forEach(s => {
+    const v = +s.dataset.v;
+    s.style.color = v <= n ? '#c4607e' : '#ccc';
+    s.style.filter = v <= n ? 'none' : 'grayscale(1)';
+    s.style.opacity = v <= n ? '1' : '0.35';
+    s.style.transform = v <= n ? 'scale(1.2)' : 'scale(1)';
+  });
+}
+
+// ── Submit a rating ──
+function submitRating() {
+  const name = document.getElementById('rater-name').value.trim();
+  const msg  = document.getElementById('rater-msg').value.trim();
+  const formMsg = document.getElementById('form-msg');
+
+  if (!name) { formMsg.textContent = '⚠️ Please enter your name.'; return; }
+  if (!selectedStar) { formMsg.textContent = '⚠️ Please select a star rating.'; return; }
+
+  const btn = document.getElementById('submit-rating');
+  btn.textContent = 'Submitting…';
+  btn.style.opacity = '0.7';
+
+  const ratings = loadRatings();
+  const entry = {
+    id: Date.now(),
+    name,
+    stars: selectedStar,
+    message: msg,
+    date: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' })
+  };
+  ratings.unshift(entry);
+  saveRatings(ratings);
+
+  setTimeout(() => {
+    btn.textContent = 'Submit Rating ✦';
+    btn.style.opacity = '1';
+    formMsg.style.color = 'var(--deep-rose)';
+    formMsg.textContent = '🌸 Thank you for your rating!';
+    document.getElementById('rater-name').value = '';
+    document.getElementById('rater-msg').value = '';
+    selectedStar = 0;
+    highlightStars(0);
+    renderRatings();
+    setTimeout(() => formMsg.textContent = '', 3500);
+  }, 600);
+}
+
+// ── Render stars string ──
+function starsHTML(n, size='1rem') {
+  return Array.from({length:5}, (_,i) =>
+    `<span style="color:${i<n?'#c4607e':'#ddd'};font-size:${size};">★</span>`
+  ).join('');
+}
+
+// ── Update average display ──
+function updateAverage(ratings) {
+  const avgEl   = document.getElementById('avg-number');
+  const starsEl = document.getElementById('avg-stars');
+  const countEl = document.getElementById('avg-count');
+  const barEl   = document.getElementById('bar-chart');
+
+  if (!ratings.length) {
+    avgEl.textContent = '—';
+    starsEl.innerHTML = '☆☆☆☆☆';
+    countEl.textContent = 'No ratings yet';
+    barEl.innerHTML = '';
+    return;
+  }
+
+  const avg = ratings.reduce((s,r) => s + r.stars, 0) / ratings.length;
+  avgEl.textContent = avg.toFixed(1);
+  starsEl.innerHTML = starsHTML(Math.round(avg), '1.6rem');
+  countEl.textContent = `${ratings.length} rating${ratings.length>1?'s':''}`;
+
+  // Bar chart per star
+  barEl.innerHTML = [5,4,3,2,1].map(n => {
+    const cnt = ratings.filter(r => r.stars === n).length;
+    const pct = ratings.length ? Math.round((cnt/ratings.length)*100) : 0;
+    return `
+      <div style="display:flex;align-items:center;gap:0.7rem;">
+        <span style="font-size:0.78rem;color:var(--text-light);width:12px;text-align:right;">${n}</span>
+        <span style="color:var(--rose);font-size:0.85rem;">★</span>
+        <div style="flex:1;height:7px;background:var(--blush);border-radius:4px;overflow:hidden;">
+          <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--deep-rose),var(--rose));border-radius:4px;transition:width 0.8s ease;"></div>
+        </div>
+        <span style="font-size:0.72rem;color:var(--text-light);width:28px;">${pct}%</span>
+      </div>`;
+  }).join('');
+}
+
+// ── Render ratings feed ──
+function renderRatings() {
+  const ratings = loadRatings();
+  updateAverage(ratings);
+
+  const feed = document.getElementById('ratings-feed');
+  if (!ratings.length) {
+    feed.innerHTML = `<div style="color:var(--text-light);font-size:0.88rem;padding:1rem;grid-column:1/-1;">Be the first to leave a rating! 🌸</div>`;
+    return;
+  }
+
+  feed.innerHTML = ratings.map((r, i) => `
+    <div class="rating-card" style="
+      background:var(--white);
+      border:1.5px solid rgba(232,160,184,0.25);
+      border-radius:18px;
+      padding:1.5rem 1.4rem;
+      box-shadow:0 6px 24px rgba(196,96,126,0.07);
+      transition:transform 0.3s,box-shadow 0.3s;
+      animation: fadeUp 0.5s ${i*0.07}s ease both;
+      opacity:0;
+    "
+    onmouseenter="this.style.transform='translateY(-5px)';this.style.boxShadow='0 16px 40px rgba(196,96,126,0.14)'"
+    onmouseleave="this.style.transform='';this.style.boxShadow='0 6px 24px rgba(196,96,126,0.07)'">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.7rem;">
+        <div style="display:flex;align-items:center;gap:0.7rem;">
+          <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--blush),var(--rose));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--mauve);">${r.name.charAt(0).toUpperCase()}</div>
+          <div>
+            <div style="font-weight:500;font-size:0.9rem;color:var(--text);">${r.name}</div>
+            <div style="font-size:0.72rem;color:var(--text-light);">${r.date}</div>
+          </div>
+        </div>
+        <div>${starsHTML(r.stars,'0.95rem')}</div>
+      </div>
+      ${r.message ? `<p style="font-size:0.84rem;color:var(--text-light);line-height:1.6;margin-top:0.5rem;padding-top:0.7rem;border-top:1px solid rgba(232,160,184,0.2);">"${r.message}"</p>` : ''}
+    </div>
+  `).join('');
+
+  // Trigger animation
+  setTimeout(() => {
+    feed.querySelectorAll('.rating-card').forEach(c => c.style.opacity = '1');
+  }, 50);
+}
+
+// ── 3D tilt on form card ──
+const rateCard = document.getElementById('rate-form-card');
+if (rateCard) {
+  rateCard.addEventListener('mousemove', e => {
+    const r = rateCard.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    rateCard.style.transform = `perspective(700px) rotateX(${-y*6}deg) rotateY(${x*6}deg) translateY(-4px)`;
+    rateCard.style.boxShadow = '0 24px 60px rgba(196,96,126,0.15)';
+  });
+  rateCard.addEventListener('mouseleave', () => {
+    rateCard.style.transform = '';
+    rateCard.style.boxShadow = '';
+  });
+}
+
+// ── Submit btn hover ──
+const submitBtn = document.getElementById('submit-rating');
+if (submitBtn) {
+  submitBtn.addEventListener('mouseenter', () => {
+    submitBtn.style.transform = 'translateY(-3px)';
+    submitBtn.style.boxShadow = '0 14px 36px rgba(196,96,126,0.45)';
+  });
+  submitBtn.addEventListener('mouseleave', () => {
+    submitBtn.style.transform = '';
+    submitBtn.style.boxShadow = '0 8px 24px rgba(196,96,126,0.3)';
+  });
+}
+
+// ── Auto-refresh every 5 seconds (simulates live updates when shared) ──
+renderRatings();
+setInterval(renderRatings, 5000);
+</script>
+</body>
+</html>
