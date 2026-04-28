@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tulin Alghamdi — Software Engineer</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <style>
   :root {
     --cream: #fdf6f0;
@@ -1177,8 +1177,9 @@ async function submitRating() {
   } catch (error) {
     btn.textContent = 'Submit Rating ✦';
     btn.style.opacity = '1';
-    formMsg.textContent = '❌ Error submitting rating. Please try again.';
-    console.error('Submit error:', error);
+    const errorMsg = error.message || 'Unknown error';
+    formMsg.textContent = `❌ Error: ${errorMsg}`;
+    console.error('Submit error details:', error);
   }
 }
 
