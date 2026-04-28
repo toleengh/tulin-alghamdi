@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tulin Alghamdi — Software Engineer</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js"></script>
 <style>
   :root {
     --cream: #fdf6f0;
@@ -932,6 +934,24 @@
 </footer>
 
 <script>
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDJ9dFqsFFABBTB9rxjDAVzkTAxb9Gt_Vw",
+  authDomain: "lap6-2.firebaseapp.com",
+  databaseURL: "https://lap6-2-default-rtdb.firebaseio.com",
+  projectId: "lap6-2",
+  storageBucket: "lap6-2.firebasestorage.app",
+  messagingSenderId: "236752969259",
+  appId: "1:236752969259:web:d2c3aae2684e436f57146e"
+};
+
+// Initialize Firebase (with loading check)
+let database;
+if (typeof firebase !== 'undefined') {
+  const app = firebase.initializeApp(firebaseConfig);
+  database = firebase.database();
+}
+
 // ─── Custom Cursor ───
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursor-ring');
@@ -1065,20 +1085,40 @@ window.addEventListener('scroll', () => {
 });
 
 // ─── RATINGS SYSTEM ───
-const STORAGE_KEY = 'tulin_portfolio_ratings_v1';
 let selectedStar = 0;
 
-// ── Load ratings from localStorage ──
-function loadRatings() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch { return []; }
+// ── Load ratings from Firebase Realtime Database ──
+function loadRatings(callback) {
+  if (!database) {
+    console.warn('Database not initialized yet');
+    callback([]);
+    return;
+  }
+  
+  database.ref('ratings').on('value', snapshot => {
+    const data = snapshot.val();
+    const ratings = data ? Object.values(data) : [];
+    // Sort by id descending (newest first)
+    ratings.sort((a, b) => b.id - a.id);
+    callback(ratings);
+  }, error => {
+    console.error('Error loading ratings:', error);
+    callback([]);
+  });
 }
 
-// ── Save ratings to localStorage ──
-function saveRatings(list) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+// ── Save rating to Firebase Realtime Database ──
+async function saveRating(entry) {
+  if (!database) {
+    throw new Error('Database not initialized');
+  }
+  
+  try {
+    await database.ref('ratings').push(entry);
+  } catch (error) {
+    console.error('Error saving rating:', error);
+    throw error;
+  }
 }
 
 // ── Star picker interaction ──
@@ -1103,7 +1143,7 @@ function highlightStars(n) {
 }
 
 // ── Submit a rating ──
-function submitRating() {
+async function submitRating() {
   const name = document.getElementById('rater-name').value.trim();
   const msg  = document.getElementById('rater-msg').value.trim();
   const formMsg = document.getElementById('form-msg');
@@ -1115,7 +1155,6 @@ function submitRating() {
   btn.textContent = 'Submitting…';
   btn.style.opacity = '0.7';
 
-  const ratings = loadRatings();
   const entry = {
     id: Date.now(),
     name,
@@ -1123,10 +1162,9 @@ function submitRating() {
     message: msg,
     date: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' })
   };
-  ratings.unshift(entry);
-  saveRatings(ratings);
 
-  setTimeout(() => {
+  try {
+    await saveRating(entry);
     btn.textContent = 'Submit Rating ✦';
     btn.style.opacity = '1';
     formMsg.style.color = 'var(--deep-rose)';
@@ -1135,9 +1173,13 @@ function submitRating() {
     document.getElementById('rater-msg').value = '';
     selectedStar = 0;
     highlightStars(0);
-    renderRatings();
     setTimeout(() => formMsg.textContent = '', 3500);
-  }, 600);
+  } catch (error) {
+    btn.textContent = 'Submit Rating ✦';
+    btn.style.opacity = '1';
+    formMsg.textContent = '❌ Error submitting rating. Please try again.';
+    console.error('Submit error:', error);
+  }
 }
 
 // ── Render stars string ──
@@ -1184,8 +1226,7 @@ function updateAverage(ratings) {
 }
 
 // ── Render ratings feed ──
-function renderRatings() {
-  const ratings = loadRatings();
+function renderRatings(ratings) {
   updateAverage(ratings);
 
   const feed = document.getElementById('ratings-feed');
@@ -1256,9 +1297,19 @@ if (submitBtn) {
   });
 }
 
-// ── Auto-refresh every 5 seconds (simulates live updates when shared) ──
-renderRatings();
-setInterval(renderRatings, 5000);
+// ── Auto-refresh with real-time updates ──
+// Initialize ratings once Firebase is ready
+window.addEventListener('load', () => {
+  // Wait a bit for Firebase to initialize
+  setTimeout(() => {
+    if (database) {
+      loadRatings(renderRatings);
+    } else {
+      renderRatings([]); // Show empty state if Firebase not available
+    }
+  }, 500);
+});
+
 </script>
 </body>
 </html>
