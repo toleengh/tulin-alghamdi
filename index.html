@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tulin Alghamdi — Software Engineer</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <style>
   :root {
     --cream: #fdf6f0;
@@ -501,6 +499,30 @@
     padding: 0.35rem 0.9rem; border-radius: 50px; font-size: 0.76rem;
   }
 
+  /* ─── CERTIFICATIONS (compact) ─── */
+  #certifications { background: var(--white); }
+  .cert-mini-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+  .cert-mini-card {
+    display: flex; align-items: center; gap: 1.1rem;
+    background: var(--cream);
+    border: 1.5px solid rgba(232,160,184,0.25);
+    border-radius: 16px;
+    padding: 1.3rem 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .cert-mini-card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(196,96,126,0.12); }
+  .cert-mini-icon {
+    width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .cert-mini-title { font-size: 0.95rem; font-weight: 500; color: var(--text); line-height: 1.3; }
+  .cert-mini-org { font-size: 0.78rem; color: var(--deep-rose); margin-top: 0.2rem; }
+
   /* ─── FOOTER ─── */
   footer {
     text-align: center; padding: 2rem;
@@ -557,7 +579,7 @@
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#education">Education</a></li>
-     <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#certifications">Certifications</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -581,7 +603,7 @@
       <div class="orbit-face orbit-front">
         <div class="avatar-circle">TA</div>
         <h3>Tulin Alghamdi</h3>
-        <p>Software Engineer · Mobile App Developer · Front-End Developer </p>
+        <p>Software Engineer · iOS Developer · AI Builder</p>
       </div>
       <div class="orbit-face orbit-back">
         <h3>University of Jeddah</h3>
@@ -718,70 +740,11 @@
   </div>
 </section>
 
-
-<section id="certifications">
-  <div class="section-inner">
-
-```
-<div class="section-label reveal">
-  Certifications
-</div>
-
-<h2 class="section-title reveal">
-  Certifications
-</h2>
-
-<div class="exp-timeline">
-
-  <div class="exp-item reveal">
-    <div class="exp-dot"></div>
-
-    <div class="exp-date">
-      2025
-    </div>
-
-    <div class="exp-title">
-      Artificial Intelligence — Concepts & Advanced Applications
-    </div>
-
-    <div class="exp-org">
-      SDAIA
-    </div>
-  </div>
-
-  <div class="exp-item reveal">
-    <div class="exp-dot"></div>
-
-    <div class="exp-date">
-      2025
-    </div>
-
-    <div class="exp-title">
-      Programming in Java EE (AD183)
-    </div>
-
-    <div class="exp-org">
-      Red Hat
-    </div>
-  </div>
-
-</div>
-```
-
-  </div>
-</section>
-
-
-
-
-
-
-  
 <!-- PROJECTS -->
 <section id="projects">
   <div class="section-inner">
     <div class="section-label reveal">Projects</div>
-    <h2 class="section-title reveal">Projects</h2>
+    <h2 class="section-title reveal">My Projects</h2>
     <div class="proj-card reveal">
       <div class="proj-visual">
         <div class="proj-emoji">🎵</div>
@@ -808,66 +771,104 @@
         </ul>
       </div>
     </div>
+
+    <div class="proj-card reveal" style="margin-top:2.5rem;">
+      <div class="proj-visual">
+        <div class="proj-emoji">👗</div>
+      </div>
+      <div class="proj-info">
+        <div class="proj-role">Digitect Internship Project · Front-End Developer</div>
+        <div class="proj-name">FUREM Website</div>
+        <p class="proj-desc">A luxury fashion brand website where I developed an advanced, highly interactive front-end — engineering smooth animations and dynamic interactions that respond to the user, all wrapped in an elegant, fashion-forward visual identity.</p>
+        <div class="proj-tech">
+          <span class="tech-tag">HTML5</span>
+          <span class="tech-tag">CSS3</span>
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">UI/UX Design</span>
+          <span class="tech-tag">Responsive Design</span>
+        </div>
+        <ul class="proj-highlights">
+          <li><span>✦</span> Engineered an advanced front-end with rich, real-time user interactivity</li>
+          <li><span>✦</span> Crafted smooth animations and transitions for a premium feel</li>
+          <li><span>✦</span> Designed a fully responsive layout across all screen sizes</li>
+          <li><span>✦</span> Delivered a polished, fashion-forward visual identity for the brand</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="proj-card reveal" style="margin-top:2.5rem;">
+      <div class="proj-visual">
+        <div class="proj-emoji">💼</div>
+      </div>
+      <div class="proj-info">
+        <div class="proj-role">Digitect Internship Project · Front-End Developer</div>
+        <div class="proj-name">Digitect Agency Website</div>
+        <p class="proj-desc">The official website for Digitect, a marketing & advertising agency. I developed an advanced, high-performance front-end with a visually striking, attractive design that captures the agency's bold creative identity.</p>
+        <div class="proj-tech">
+          <span class="tech-tag">HTML5</span>
+          <span class="tech-tag">CSS3</span>
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">UI/UX Design</span>
+          <span class="tech-tag">Responsive Design</span>
+        </div>
+        <ul class="proj-highlights">
+          <li><span>✦</span> Built an advanced, performance-optimized front-end interface</li>
+          <li><span>✦</span> Designed a visually striking, attractive layout aligned with the brand</li>
+          <li><span>✦</span> Implemented smooth, interactive UI elements to boost engagement</li>
+          <li><span>✦</span> Delivered the agency's primary digital presence end-to-end</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- EXPERIENCE (Certifications as credentialed experience) -->
-<section id="experience">
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-inner">
+    <div class="section-label reveal">Certifications</div>
+    <h2 class="section-title reveal">Certifications & Training</h2>
+    <div class="cert-mini-grid">
+      <div class="cert-mini-card reveal">
+        <div class="cert-mini-icon">🤖</div>
+        <div>
+          <div class="cert-mini-title">AI Concepts & Advanced Applications</div>
+          <div class="cert-mini-org">Saudi Data and AI Authority (SDAIA)</div>
+        </div>
+      </div>
+      <div class="cert-mini-card reveal">
+        <div class="cert-mini-icon">☕</div>
+        <div>
+          <div class="cert-mini-title">Programming in Java EE (AD183)</div>
+          <div class="cert-mini-org">Red Hat</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="background:var(--cream);">
   <div class="section-inner">
     <div class="section-label reveal">Experience</div>
-    <!-- <h2 class="section-title reveal">Credentials & Learning</h2> -->
+    <h2 class="section-title reveal">Professional Experience</h2>
     <div class="exp-timeline">
       <div class="exp-item reveal">
         <div class="exp-dot"></div>
-        <!-- <div class="exp-date">Certification · SDAIA</div>
-        <div class="exp-title">Artificial Intelligence — Concepts & Advanced Applications</div>
-        <div class="exp-org">Saudi Data and AI Authority (SDAIA)</div>
-        <div class="exp-desc">Earned a Certificate of Achievement covering foundational to advanced AI concepts, including machine learning, neural networks, and real-world AI application development.</div>
-      </div>
-      <div class="exp-item reveal">
-        <div class="exp-dot"></div>
-        <div class="exp-date">Certification · Red Hat</div>
-        <div class="exp-title">Programming in Java EE (AD183)</div>
-        <div class="exp-org">Red Hat</div>
-        <div class="exp-desc">Attended official Red Hat training on Java Enterprise Edition, covering enterprise-grade application development, server-side programming, and modern Java EE frameworks.</div>
-      </div>
-      <div class="exp-item reveal">
-        <div class="exp-dot"></div>
-        <div class="exp-date">Internship · Full-Cycle Software Engineering</div>
-        <div class="exp-title">Software Engineering Intern — UI/UX & Web Development</div>
+        <div class="exp-date">Internship · Marketing & Advertising Agency</div>
+        <div class="exp-title">Software Engineering Intern — Full-Cycle Web Development & UI/UX</div>
         <div class="exp-org">Digitect Agency</div>
         <div class="exp-desc">
-          Completed a comprehensive internship at Digitect, a professional digital agency, where I was immersed in every phase of the software engineering lifecycle — from the first client conversation to the final product launch.
+          Completed a hands-on internship at Digitect, a marketing & advertising agency, where I worked across the full software engineering cycle — from understanding the client's needs to designing and building the final product.
           <br/><br/>
-          <strong style="color:var(--text);">Requirements & Client Discovery</strong> — Conducted structured client-facing sessions to gather, analyze, and document requirements. Translated real business needs and user goals into clear, actionable design and development briefs, ensuring every decision was rooted in what the client actually needed.
+          <strong style="color:var(--text);">Requirements & Client Discovery</strong> — Met with clients to gather and understand exactly what they needed, then translated those requirements into a clear design and development plan.
           <br/><br/>
-          <strong style="color:var(--text);">UI/UX Design & Prototyping</strong> — Took ownership of the full design process using industry tools like Figma — from wireframes and user flows to high-fidelity interactive prototypes. Improved existing agency websites by auditing usability, redesigning interfaces, and elevating the overall visual experience in line with modern UI/UX standards.
+          <strong style="color:var(--text);">UI/UX Design</strong> — Designed the website experience from the ground up, improving usability and visual appeal to match each brand's identity.
           <br/><br/>
-          <strong style="color:var(--text);">Web Development & Delivery</strong> — Developed and delivered client websites end-to-end, collaborating closely with the engineering team to bring approved designs to life with clean, maintainable code. Ensured seamless handoff between design and development throughout every project.
-          <br/><br/>
-          This internship gave me real-world exposure to working directly with clients, managing feedback cycles, and delivering polished digital products under professional deadlines — completing the full circle of software engineering in a live agency environment.
+          <strong style="color:var(--text);">Website Development</strong> — Built and delivered two complete websites for the agency: <strong style="color:var(--text);">FUREM</strong>, a luxury fashion brand site, and the <strong style="color:var(--text);">Digitect</strong> agency's own official website — both developed end-to-end, covering the full circle of software engineering from client need to live product.
         </div>
-      </div> -->
-
-  <div class="exp-item reveal">
-  <div class="exp-dot"></div>
-
-  <div class="exp-date">
-    Apr 2026 – Jun 2026 · Internship
+      </div>
+    </div>
   </div>
-
-  <div class="exp-title">
-    Software Engineering Intern
-  </div>
-
-  <div class="exp-org">
-    Digitect Marketing & Advertising Agency
-  </div>
-
-  <div class="exp-desc">
-    Completed a two-month internship at Digitect Marketing & Advertising Agency, where I designed and developed two interactive websites: FUREM and Digitect, utilizing modern UI/UX principles, smooth scrolling, animations, and responsive web technologies.
-  </div>
-</div>
 </section>
 
 <!-- CONTACT -->
@@ -893,18 +894,13 @@
               <div style="font-size:0.78rem;opacity:0.75">0564246326</div>
             </div>
           </a>
-
-          <a href="https://www.linkedin.com/in/toleen-alghamdi" class="contact-link" target="_blank">
-  <div class="contact-link-icon">💼</div>
-  <div>
-    <div style="font-weight:500">LinkedIn</div>
-    <div style="font-size:0.78rem;opacity:0.75">
-      toleen-alghamdi
-    </div>
-  </div>
-</a> 
-
-          
+          <a href="https://www.linkedin.com/in/toleen-alghamdi?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noopener" class="contact-link">
+            <div class="contact-link-icon">💼</div>
+            <div>
+              <div style="font-weight:500">LinkedIn</div>
+              <div style="font-size:0.78rem;opacity:0.75">linkedin.com/in/toleen-alghamdi</div>
+            </div>
+          </a>
           <div class="contact-link">
             <div class="contact-link-icon">📍</div>
             <div>
@@ -1016,24 +1012,6 @@
 </footer>
 
 <script>
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDJ9dFqsFFABBTB9rxjDAVzkTAxb9Gt_Vw",
-  authDomain: "lap6-2.firebaseapp.com",
-  databaseURL: "https://lap6-2-default-rtdb.firebaseio.com",
-  projectId: "lap6-2",
-  storageBucket: "lap6-2.firebasestorage.app",
-  messagingSenderId: "236752969259",
-  appId: "1:236752969259:web:d2c3aae2684e436f57146e"
-};
-
-// Initialize Firebase (with loading check)
-let database;
-if (typeof firebase !== 'undefined') {
-  const app = firebase.initializeApp(firebaseConfig);
-  database = firebase.database();
-}
-
 // ─── Custom Cursor ───
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursor-ring');
@@ -1167,40 +1145,20 @@ window.addEventListener('scroll', () => {
 });
 
 // ─── RATINGS SYSTEM ───
+const STORAGE_KEY = 'tulin_portfolio_ratings_v1';
 let selectedStar = 0;
 
-// ── Load ratings from Firebase Realtime Database ──
-function loadRatings(callback) {
-  if (!database) {
-    console.warn('Database not initialized yet');
-    callback([]);
-    return;
-  }
-  
-  database.ref('ratings').on('value', snapshot => {
-    const data = snapshot.val();
-    const ratings = data ? Object.values(data) : [];
-    // Sort by id descending (newest first)
-    ratings.sort((a, b) => b.id - a.id);
-    callback(ratings);
-  }, error => {
-    console.error('Error loading ratings:', error);
-    callback([]);
-  });
+// ── Load ratings from localStorage ──
+function loadRatings() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
 }
 
-// ── Save rating to Firebase Realtime Database ──
-async function saveRating(entry) {
-  if (!database) {
-    throw new Error('Database not initialized');
-  }
-  
-  try {
-    await database.ref('ratings').push(entry);
-  } catch (error) {
-    console.error('Error saving rating:', error);
-    throw error;
-  }
+// ── Save ratings to localStorage ──
+function saveRatings(list) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
 }
 
 // ── Star picker interaction ──
@@ -1225,7 +1183,7 @@ function highlightStars(n) {
 }
 
 // ── Submit a rating ──
-async function submitRating() {
+function submitRating() {
   const name = document.getElementById('rater-name').value.trim();
   const msg  = document.getElementById('rater-msg').value.trim();
   const formMsg = document.getElementById('form-msg');
@@ -1237,6 +1195,7 @@ async function submitRating() {
   btn.textContent = 'Submitting…';
   btn.style.opacity = '0.7';
 
+  const ratings = loadRatings();
   const entry = {
     id: Date.now(),
     name,
@@ -1244,9 +1203,10 @@ async function submitRating() {
     message: msg,
     date: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' })
   };
+  ratings.unshift(entry);
+  saveRatings(ratings);
 
-  try {
-    await saveRating(entry);
+  setTimeout(() => {
     btn.textContent = 'Submit Rating ✦';
     btn.style.opacity = '1';
     formMsg.style.color = 'var(--deep-rose)';
@@ -1255,14 +1215,9 @@ async function submitRating() {
     document.getElementById('rater-msg').value = '';
     selectedStar = 0;
     highlightStars(0);
+    renderRatings();
     setTimeout(() => formMsg.textContent = '', 3500);
-  } catch (error) {
-    btn.textContent = 'Submit Rating ✦';
-    btn.style.opacity = '1';
-    const errorMsg = error.message || 'Unknown error';
-    formMsg.textContent = `❌ Error: ${errorMsg}`;
-    console.error('Submit error details:', error);
-  }
+  }, 600);
 }
 
 // ── Render stars string ──
@@ -1309,7 +1264,8 @@ function updateAverage(ratings) {
 }
 
 // ── Render ratings feed ──
-function renderRatings(ratings) {
+function renderRatings() {
+  const ratings = loadRatings();
   updateAverage(ratings);
 
   const feed = document.getElementById('ratings-feed');
@@ -1380,19 +1336,9 @@ if (submitBtn) {
   });
 }
 
-// ── Auto-refresh with real-time updates ──
-// Initialize ratings once Firebase is ready
-window.addEventListener('load', () => {
-  // Wait a bit for Firebase to initialize
-  setTimeout(() => {
-    if (database) {
-      loadRatings(renderRatings);
-    } else {
-      renderRatings([]); // Show empty state if Firebase not available
-    }
-  }, 500);
-});
-
+// ── Auto-refresh every 5 seconds (simulates live updates when shared) ──
+renderRatings();
+setInterval(renderRatings, 5000);
 </script>
 </body>
 </html>
